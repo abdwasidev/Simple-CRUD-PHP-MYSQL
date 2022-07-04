@@ -1,7 +1,7 @@
 <?php 
 include 'config.php';
 
-if($_GET['action'] == "table_data"){
+if(isset($_GET['action']) == "table_data"){
 	$query = $mysqli->query("SELECT * FROM btc order by id desc");
 	$jumlah = $query->num_rows;
 	$data = array();
@@ -33,13 +33,13 @@ if($_GET['action'] == "table_data"){
 	echo json_encode($output);
 }
 
-elseif($_GET['action'] == "form_data"){
+elseif(isset($_GET['action']) == "form_data"){
    $query = $mysqli->query( "SELECT * FROM btc WHERE id='$_GET[id]'");
    $data  = $query->fetch_array();	
    echo json_encode($data);
 }
 
-elseif($_GET['action'] == "insert"){
+elseif(isset($_GET['action']) == "insert"){
   
     $result = $mysqli->query("INSERT INTO btc SET
         id     = '$_POST[id]',
@@ -56,7 +56,7 @@ elseif($_GET['action'] == "insert"){
         ");	
 }
 
-elseif($_GET['action'] == "update"){
+elseif(isset($_GET['action']) == "update"){
 
  	$result = $mysqli->query("UPDATE btc SET
         id     = '$_POST[id]',
@@ -75,7 +75,8 @@ elseif($_GET['action'] == "update"){
  
 }
 
-elseif($_GET['action'] == "delete"){
+elseif(isset($_GET['action']) == "delete"){
    $result = $mysqli->query("DELETE FROM btc WHERE id='$_GET[id]'");
 }
+
 ?>

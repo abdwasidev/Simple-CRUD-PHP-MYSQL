@@ -9,5 +9,9 @@
 
     // Create connection
     $mysqli = new mysqli($host, $user, $pass, $name);
+    
+    if (mysqli_connect_error()) {
+        echo "Connection Failed: ".mysqli_connect_error();
+    }
 
 ?>

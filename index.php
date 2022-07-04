@@ -176,93 +176,91 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css"/>
 
 <script>
-      //Tempat Proses Jquery Ajax
-      
-      var save_method, table,pesan;
-      //Menerapkan plugin datatables
-      $(function(){
-         table = $('#myTable').DataTable( {
-                "processing": true,
-                "ajax": "action.php?action=table_data"
-            } );
-         });
+var save_method, table,pesan;
 
-      function form_add(){
-         save_method = "add";
-         $('#modalmhs').modal('show');
-         $('#modalmhs form')[0].reset();
-         $('.modal-title').text('Tambah Data');
-      }
+$(function(){
+    table = $('#myTable').DataTable( {
+          "processing": true,
+          "ajax": "action.php?action=table_data"
+      } );
+    });
 
-      function form_edit(id){
-           save_method = "edit";
-           $.ajax({
-              url : "action.php?action=form_data&id="+id,
-              type : "GET",
-              dataType : "JSON",
-              success : function(data){
-                 $('#modalmhs').modal('show');
-                 $('.modal-title').text('Ubah Data');
-              
-                 $('#id').val(data.id);
-                 $('#sinyal').val(data.sinyal);
-                 $('#level').val(data.level);
-                 $('#tanggal').val(data.tanggal);
-                 $('#hargaidr').val(data.hargaidr);
-                 $('#hargausdt').val(data.hargausdt);
-                 $('#volusdt').val(data.volusdt);
-                 $('#volidr').val(data.volidr);
-                 $('#lastbuy').val(data.lastbuy);
-                 $('#lastsell').val(data.lastsell);
-                 $('#jenis').val(data.jenis);
-              },
-              error : function(){
-                 alert("Tidak dapat menampilkan data!");
-              }
-           });
-      }
+function form_add(){
+    save_method = "add";
+    $('#modalmhs').modal('show');
+    $('#modalmhs form')[0].reset();
+    $('.modal-title').text('Tambah Data');
+}
 
-      function save_data(){
-         if(save_method == "add"){
-            url = "action.php?action=insert";
-            pesan = "Berhasil Disimpan";
-         }else{ 
-            url = "action.php?action=update";
-            pesan= "Berhasil Diubah";
-         }
+function form_edit(id){
+      save_method = "edit";
+      $.ajax({
+        url : "action.php?action=form_data&id="+id,
+        type : "GET",
+        dataType : "JSON",
+        success : function(data){
+            $('#modalmhs').modal('show');
+            $('.modal-title').text('Ubah Data');
+        
+            $('#id').val(data.id);
+            $('#sinyal').val(data.sinyal);
+            $('#level').val(data.level);
+            $('#tanggal').val(data.tanggal);
+            $('#hargaidr').val(data.hargaidr);
+            $('#hargausdt').val(data.hargausdt);
+            $('#volusdt').val(data.volusdt);
+            $('#volidr').val(data.volidr);
+            $('#lastbuy').val(data.lastbuy);
+            $('#lastsell').val(data.lastsell);
+            $('#jenis').val(data.jenis);
+        },
+        error : function(){
+            alert("Tidak dapat menampilkan data!");
+        }
+      });
+}
 
-         $.ajax({
-            url : url,
-            type : "POST",
-            data : $('#modalmhs form').serialize(),
-            success : function(){
-               $('#modalmhs').modal('hide');
-               $('#modalmhs form')[0].reset();
-               alert(pesan);
-               table.ajax.reload();         
-            },
-            error : function(){
-               alert("Tidak dapat menyimpan data!");
-            }     
-         });
-         return false;
-      }
+function save_data(){
+    if(save_method == "add"){
+      url = "action.php?action=insert";
+      pesan = "Berhasil Disimpan";
+    }else{ 
+      url = "action.php?action=update";
+      pesan= "Berhasil Diubah";
+    }
 
-      function delete_data(id){
-         if(confirm("Apakah yakin data akan dihapus?")){
-            $.ajax({
-               url : "action.php?action=delete&id="+id,
-               type : "GET",
-               success : function(data){
-                  alert("Data Berhasil Dihapus")
-                  table.ajax.reload();
-               },
-               error : function(){
-                  alert("Tidak dapat menghapus data!");
-               }
-            });
-         }
-      }
+    $.ajax({
+      url : url,
+      type : "POST",
+      data : $('#modalmhs form').serialize(),
+      success : function(){
+          $('#modalmhs').modal('hide');
+          $('#modalmhs form')[0].reset();
+          alert(pesan);
+          table.ajax.reload();         
+      },
+      error : function(){
+          alert("Tidak dapat menyimpan data!");
+      }     
+    });
+    return false;
+}
+
+function delete_data(id){
+    if(confirm("Apakah yakin data akan dihapus?")){
+      $.ajax({
+          url : "action.php?action=delete&id="+id,
+          type : "GET",
+          success : function(data){
+            alert("Data Berhasil Dihapus")
+            table.ajax.reload();
+          },
+          error : function(){
+            alert("Tidak dapat menghapus data!");
+          }
+      });
+    }
+}
 
 </script>
 <script>
